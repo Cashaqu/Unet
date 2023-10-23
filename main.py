@@ -1,5 +1,3 @@
-import pathlib
-
 from data_preprocess.bubbles_generator import create_project_structure, fill_dataset
 from UNet.model import UNet
 from UNet.train_function import training
@@ -14,6 +12,11 @@ device = 'cuda' if torch.cuda.is_available() else 'cpu'
 
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description="Get some hyperparameters.")
+
+    parser.add_argument("--mode",
+                        default='inference',
+                        type=str,
+                        help="train or inference")
 
     parser.add_argument("--dataset_size",
                         default=100,
@@ -35,10 +38,10 @@ if __name__ == '__main__':
                         type=int,
                         help="size of batch for train and validation")
 
-    parser.add_argument("--mode",
-                        default='inference',
+    parser.add_argument("--model_name",
+                        default=10,
                         type=str,
-                        help="train or inference")
+                        help="name of your model for inference")
 
     parser.add_argument("--test_size",
                         default=10,
@@ -49,12 +52,14 @@ if __name__ == '__main__':
 
     args = parser.parse_args()
 
+    MODE = args.mode
     DATASET_SIZE = args.dataset_size
     COEF_SPLIT = args.coef_split
     NUM_EPOCHS = args.num_epoch
     BATCH_SIZE = args.batch_size
-    MODE = args.mode
+    MODEL_NAME = args.model_name
     TEST_SIZE = args.test_size
+
 
     if MODE == 'train':
 
@@ -81,10 +86,10 @@ if __name__ == '__main__':
         UNet_eval(
             path_to_model = f'./models/model_{last_model}.pt',
             test_size = 10
-                )
-    else:
+        )
 
+    if MODE == 'inference':
         UNet_eval(
-            path_to_model='./models/best_model.pt',
+            path_to_model=f'./models/{MODEL_NAME}',
             test_size=TEST_SIZE
         )
