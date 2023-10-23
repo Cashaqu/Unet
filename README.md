@@ -3,7 +3,9 @@ Generating bubbles and trying to segment them.
 
 ## How to use
 ### Inference
+
 My trained model: https://drive.google.com/file/d/1T3r-n4Inx_8WbG-XC6N6ZO8WE2UP2RuH/view?usp=sharing
+
 Put the trained model to ```./models``` and use:
 ```sh
 python main.py --mode=inference --model_name=best_model.pt --test_size=10
