@@ -43,4 +43,4 @@ def training(model, num_epochs, train_loader, valid_loader, device, criterion, o
     timestemp_for_model = datetime.now().strftime("%Y-%m-%d-%H:%M:%S")
     torch.save(model, f'./models/model_{timestemp_for_model}.pt')
     print(f'Model saved as ./models/model_{timestemp_for_model}.pt')
-    return model
+    return timestemp_for_model

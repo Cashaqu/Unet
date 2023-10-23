@@ -175,12 +175,15 @@ def create_project_structure():
     ├── data
     │    ├── X_valid
     │    ├── X_train
+    │    ├── X_test
     │    ├── y_valid
-    │    └── y_train
+    │    ├── y_train
+    │    ├── y_test
+    │    └── y_pred
     ├── models
     """
     if not os.path.exists('./models'): os.makedirs('./models')
-    if not os.path.exists('./data/eval'): os.makedirs('./data/eval')
+    if not os.path.exists('./data/y_pred'): os.makedirs('./data/y_pred')
     if not os.path.exists('./data/X_train'): os.makedirs('./data/X_train')
     if not os.path.exists('./data/X_valid'): os.makedirs('./data/X_valid')
     if not os.path.exists('./data/X_test'): os.makedirs('./data/X_test')
@@ -194,13 +197,13 @@ def fill_dataset(DATASET_SIZE, COEF_SPLIT):
     generator = GrayScaleDataProvider(nx=572, ny=572, cnt=20)
 
     X_train, y_train = generator(train_size)
-    print('Generate train data...\n')
+    print('\nGenerate train data... -> ./data/X_train/ and ./data/y_train/')
     for i in tqdm(range(train_size)):
         matplotlib.image.imsave('./data/X_train/' + "{0:0{k}d}".format(i, k=len(str(train_size))) + '.png', X_train[i,...,0])
         matplotlib.image.imsave('./data/y_train/' + "{0:0{k}d}".format(i, k=len(str(train_size))) + '.png', y_train[i,...,1])
 
     X_valid, y_valid = generator(valid_size)
-    print('Generate validation data...\n')
+    print('\nGenerate validation data... -> ./data/X_valid/ and ./data/y_valid/')
     for i in tqdm(range(valid_size)):
         matplotlib.image.imsave('./data/X_valid/' + "{0:0{k}d}".format(i, k=len(str(valid_size))) + '.png', X_valid[i,...,0])
         matplotlib.image.imsave('./data/y_valid/' + "{0:0{k}d}".format(i, k=len(str(valid_size))) + '.png', y_valid[i,...,1])
